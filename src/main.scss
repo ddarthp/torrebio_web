@@ -1,0 +1,95 @@
+@mixin element-color($color) {
+  background-image: url('data:image/svg+xml;utf8,<svg ...><g stroke="#{$color}" ... /></g></svg>');
+}
+
+body {
+  background-color: #eeeeee;
+  font-family: "Muli", Helvetica, Arial, sans-serif;
+}
+#app {
+  font-family: "Muli", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50; 
+}
+.md-button {
+  text-transform: uppercase;
+}
+.md-raised {
+    background-color: #607d8b;
+    color: rgba(255, 255, 255, .87);
+}
+
+.md-icon, a{
+  color: #607d8b;
+}
+.md-tabs{
+  .md-tabs-navigation {
+      button,a {
+      color:  #2c3e50;
+      font-size: 14px;
+      height: 42px;
+      &.md-active {
+        border-bottom-color: rgb(96, 125, 139);
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
+        margin: 0;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+      }
+    }
+  }
+}
+
+.appBar {
+  img {
+    height: 16px;
+  }
+}
+
+svg{
+  fill: #607d8b;
+  &.icons, .AppIcon--icon{
+    width: 24px;
+    height: 24px;
+    background-size: 100%;
+    display: block;
+    fill: #607d8b
+    
+    // .account-card-details{
+    //   background-image: url('./assets/img/account-card-details.svg');
+    //   @include element-color(607d8b);
+    // }
+    // .approval{
+    //   background-image: url('./assets/img/approval.svg')
+    // }
+    // .facebook{
+    //   background-image: url('./assets/img/facebook.svg')
+    // }
+    // .email{
+    //   background-image: url('./assets/img/email.svg')
+    // }
+    // .instagram{
+    //   background-image: url('./assets/img/instagram.svg')
+    // }
+    // .linkedin{
+    //   background-image: url('./assets/img/linkedin.svg');
+    //   @include element-color(#607d8b);
+    // }
+    // .phone{
+    //   background-image: url('./assets/img/phone.svg')
+    // }
+    // .twitter{
+    //   background-image: url('./assets/img/twitter.svg')
+    // }
+    // .weight{
+    //   background-image: url('./assets/img/weight.svg')
+    // }
+    // &.lightbulb-on-outline{
+    //   background-image: url('./assets/img/lightbulb-on-outline.svg')
+    // }
+  }
+}
