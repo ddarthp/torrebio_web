@@ -3,32 +3,30 @@
     <div class="container">
       <div class="background"></div>
       <md-card>
-      <md-card-header>
-        <div class="logo"><img src="../assets/img/torrebio.png"/></diV>
-        <div class="md-title">Please sign in</div>
-      </md-card-header>
-      <md-card-content>
-        <md-field>
-          <label>Torre Id:</label>
-          <md-input v-model="torreId" ></md-input>
-        </md-field>
-      </md-card-content>
-
-      <md-card-actions>
-        <md-button  v-on:click="() => { (torreId!=='') ? this.$router.push('/profile/' + torreId) : false }">
-              <icon name="exit_to_app"></icon>
-              <span >Sign in</span>
-          </md-button>
-      </md-card-actions>
-    </md-card>
+        <md-card-header></md-card-header>
+        <md-card-content>
+          <div class="logo">
+            <img src="../../assets/img/linkedin.png" />
+            <span class="spinner"> <img src="../../assets/img/spinner.gif"/></span> <img src="../../assets/img/torrebio.png"/>
+          </div>
+        </md-card-content>
+        <md-card-actions>
+          <p> Connecting wait a moment please...</p>
+        </md-card-actions>
+      </md-card>
     </div>
   </section>
 </template>
 
 <script>
 import Icon from 'vue-md-icons/src/components/Icon'
+import { mapState } from 'vuex'
 export default {
-  name: 'Home',
+  name: 'Linkedin',
+  computed: mapState({
+    bio: state => state.profile.bio,
+    access_token: state => state.profile.access_token
+  }),
   components: {
     Icon
   },
@@ -36,6 +34,36 @@ export default {
     return {
       torreId: ''
     }
+  },
+  methods: {
+    linkedin: function () {
+      let params = this.$route.query
+      if (params.code && params.state) {
+        params['redirect_uri'] = 'http://localhost:8080/linkedin/auth'
+        let payload = {
+          qs: this.jsonQueryString(params)
+        }
+        console.log(payload)
+        this.$store.dispatch('profile/getToken', payload)
+      }
+    },
+    jsonQueryString: function (obj, prefix) {
+      let str = []
+      let p
+      for (p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          let k = prefix ? prefix + '[' + p + ']' : p
+          let v = obj[p]
+          str.push((v !== null && typeof v === 'object')
+            ? this.jsonQueryString(v, k)
+            : encodeURIComponent(k) + '=' + encodeURIComponent(v))
+        }
+      }
+      return str.join('&')
+    }
+  },
+  created () {
+    this.linkedin()
   }
 }
 </script>
@@ -49,7 +77,7 @@ export default {
   align-items: center;
   justify-content: center;
   .background {
-    background-image: url('../assets/img/background.svg');
+    background-image: url('../../assets/img/background.svg');
     position: absolute;
     width: calc(100% + 20px);
     height: calc(100% + 20px);
@@ -70,14 +98,14 @@ export default {
   color:rgba(0,0,0,.8);
   margin-bottom: 20px;
   background-color: #fff;
-  text-align: left;
+  text-align: center;
   width: 540px;
   position: relative;
   top: 0;
   .md-button{
         font-size: 14px;
         img{
-            float: left;
+            float: center;
             height: 16px;
             display: block;
             &.logo{
@@ -96,7 +124,16 @@ export default {
   }
   .logo{
     width: 100%;
-    text-align: right;
+    text-align: center;
+    img {
+      height: 45px;
+    }
+    .spinner {
+      img {
+        height: 30px;
+        margin: 0 20px;
+      }
+    }
   }
   h2{
       font-size: 20px;
@@ -126,13 +163,8 @@ export default {
       width: 75%;
       float: left;
       }
-      .options {
-          width: 20%;
-          float: right;
-          margin-top: 8px;
-          button {
-              float:left;
-          }
+      p {
+        width: 100%
       }
   }
 }

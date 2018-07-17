@@ -31,9 +31,9 @@
         <md-tab  v-on:click="() => { this.$SmoothScroll(this.elmId('#about')) }" id="tab-about"  md-label="ABOUT"></md-tab>
         <md-tab  v-on:click="() => { this.$SmoothScroll(this.elmId('#experiences')) }" id="tab-experiences" md-label="JOBS"></md-tab>
         <md-tab  v-on:click="() => { this.$SmoothScroll(this.elmId('#education')) }" id="tab-education"  md-label="EDUCATION"></md-tab>
-        <md-tab v-on:click="linkedin()" md-label="LINKEDIN"></md-tab>
+        <md-tab v-on:click="() => { linkedin()  }" md-label="LINKEDIN" id="tab-linkedin" ></md-tab>
       </MdTabs>
-      <!-- <div v-smoothscroll="{ duration : 500, callback: () => {} , context : undefined, axis :'y' }" >ABOUT</div> -->
+      <!-- <div v-smoothscroll="{ duration : 500, callback: () => {} , context : undefined, axis :'y' }" >ABOUT</div>-->
     </div>
     <div class="side-panel-overlay" v-on:click="toggleMenu()"></div>
     <div class="side-panel">
@@ -46,7 +46,7 @@
           </div>
           <div class="tdl-avatar">
             <img v-bind:src="`${bio.person.picture}`" class="tdl-placeholder">
-            <div class="tdl-user-name">{{bio.person.name}}</div> <div>{{bio.person.name}}</div>
+            <div class="tdl-user-name">{{bio.person.name}}</div><div>{{bio.person.name}}</div>
           </div>
         </header>
         <md-list>
@@ -56,7 +56,7 @@
           </md-list-item>
           <md-list-item >
               <icon name="account_box"></icon>
-              <span class="md-list-item-text"> your bio</span>
+              <span class="md-list-item-text">your bio</span>
           </md-list-item>
           <md-list-item >
               <icon name="code"></icon>
@@ -88,7 +88,7 @@
         </md-list>
         <footer><div class="tdl-footer-links"><a href="https://torre.co/" target="_blank" class="md-primary"><small>About us</small></a>&nbsp;&nbsp;&nbsp;
           <a href="https://accounts.torre.co/terms/" target="_blank" class="md-primary"><small>Terms of use</small></a>&nbsp;&nbsp;&nbsp;
-          <a href="https://accounts.torre.co/privacy/" target="_blank" class="md-primary"><small>Privacy policy</small></a></div> <div class="tdl-footer-copy"><small>© Torre Technologies Co.</small></div></footer>
+          <a href="https://accounts.torre.co/privacy/" target="_blank" class="md-primary"><small>Privacy policy</small></a></div><div class="tdl-footer-copy"><small>© Torre Technologies Co.</small></div></footer>
       </div>
     </div>
   </nav>
@@ -123,7 +123,7 @@
         </div>
       </div>
     </section>
-    <section class="recomendations" id="recomendations"> </section>
+    <section class="recomendations" id="recomendations"></section>
     <section class="about" id="about">
       <div class="md-subheading">
         <p>{{bio.person.summaryOfBio}}</p>
@@ -185,6 +185,68 @@
         <div class="timeline">
         </div>
     </section>
+    <section v-if="bio.linkedin" class="linkedin-profile" id="linkedin-profile">
+      <div class="title">
+        <img src="../../assets/img/linkedin.png" />
+      </div>
+      <div class="profile-content">
+        <div class="left">
+          <div class="pic">
+            <img v-bind:src="bio.linkedin.pictureUrl"/>
+          </div>
+          <div class="headline">
+            <div>
+              <h2 class="md-title">{{bio.linkedin.formattedName}}</h2>
+              <h3  class="md-subhead">{{bio.linkedin.headline}}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="summary">
+            <div class="title">
+              Summary
+              <span>{{bio.linkedin.emailAddress}}</span>
+            </div>
+            <md-card class="item" >
+              <md-card-header>
+                <md-card-header-text>
+                   {{bio.linkedin.summary}}
+                </md-card-header-text>
+              </md-card-header>
+              <div class="md-card-footer" >
+                <div class="options">
+                  <MdButton class="md-icon-button" ><icon name="share"></icon></MdButton>
+                </div>
+              </div>
+            </md-card>
+          </div>
+          <div class="positions">
+            <div class="title">
+              Positions & experience
+            </div>
+            <md-card class="item" v-for="pos in bio.linkedin.positions.values" :key="pos.id">
+              <md-card-header>
+                <md-card-header-text>
+                  <div class="md-title"><h2>{{pos.company.name}}</h2></div>
+                  <div class="md-subhead">
+                    {{pos.title}}
+                  </div>
+                  <div class="location">
+                    {{pos.location.name}}
+                  </div>
+                </md-card-header-text>
+              </md-card-header>
+              <div class="md-card-footer" >
+                <div class="options">
+                  <MdButton class="md-icon-button" ><icon name="share"></icon></MdButton>
+                  <MdButton class="md-icon-button" ><icon name="remove_red_eye"></icon></Mdbutton>
+                </div>
+              </div>
+            </md-card>
+          </div>
+         </div>
+      </div>
+    </section>
   </div>
   <div class="main-footer">
     <div>
@@ -201,18 +263,11 @@ import VueSmoothScroll from 'vue-smoothscroll'
 import * as svgicon from 'vue-svgicon'
 import { mapState } from 'vuex'
 
-// svgicon.register({
-//   'weight': {
-//     width: 24,
-//     height: 24,
-//     viewBox: '0 0 24 24',
-//     data: '<path pid="0" d="M12 3a4 4 0 0 1 4 4c0 .73-.19 1.41-.54 2H18c.95 0 1.75.67 1.95 1.56C21.96 18.57 22 18.78 22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2c0-.22.04-.43 2.05-8.44C4.25 9.67 5.05 9 6 9h2.54A3.89 3.89 0 0 1 8 7a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0-2-2z"/>'
-//   }
-// })
 export default {
   name: 'Profile',
   computed: mapState({
-    bio: state => state.profile.bio
+    bio: state => state.profile.bio,
+    access_token: state => state.profile.access_token
   }),
   components: {
     Icon,
@@ -239,21 +294,26 @@ export default {
     elmId: (el) => {
       return document.querySelector(el)
     },
-    getTorreBio: (_this) => {
-      let postBody = {
-        torreId: _this.$route.params.torreId
+    getTorreBio: function () {
+      let payload = {
+        body: {
+          torreId: this.$route.params.torreId
+        },
+        access_token: this.access_token
       }
-      _this.$store.dispatch('profile/getBio', postBody).then((r) => {
+      let self = this
+      this.$store.dispatch('profile/getBio', payload).then(function () {
         setTimeout(() => {
-          _this.stickyMenu()
+          self.stickyMenu()
+          if (self.access_token !== null) {
+            return self.$SmoothScroll(self.elmId('#linkedin-profile'))
+          }
         }, 3000)
       })
     },
     stickyMenu: () => {
       let menuBar = document.querySelector('.coverBar')
-      console.log(menuBar)
       let sticky = menuBar.offsetTop
-      console.log(sticky)
       window.onscroll = () => {
         if (window.pageYOffset >= sticky) {
           menuBar.classList.add('sticky')
@@ -271,6 +331,9 @@ export default {
       ]
       let from = new Date(item.fromYear, monthNames.indexOf(item.fromMonth))
       let to = new Date(item.toYear, monthNames.indexOf(item.toMonth))
+      if (isNaN(to.getDate())) {
+        to = from
+      }
       return (from.getTime() !== to.getTime())
         ? `${monthNames[from.getMonth()].substring(0, 3)} ${from.getFullYear()} - ${monthNames[to.getMonth()].substring(0, 3)} ${to.getFullYear()}`
         : `${monthNames[to.getMonth()].substring(0, 3)} ${to.getFullYear()}`
@@ -283,19 +346,34 @@ export default {
       return parts[0]
     },
     linkedin: function () {
-      // axios.get(`http://localhost:3000/api/oauth/linkedin/`)
-      //   .then(response => {
-      //     console.log(response.data)
-      //   })
-      //   .catch(e => { console.log(e) })
-      this.$auth.options.setId('linkedin', this.bio.person.publicId)
-      this.$auth.authenticate('linkedin').then(function () {
-        console.log('autenticado')
-        // console.log(response)
-      })
+      if (this.access_token !== null) {
+        return this.$SmoothScroll(this.elmId('#linkedin-profile'))
+      }
+      let likendinConf = {
+        client_id: '78tjhkxleu8nnm',
+        redirect_uri: 'http://localhost:8080/linkedin/auth',
+        response_type: 'code',
+        scope: 'r_basicprofile r_emailaddress',
+        state: this.bio.person.publicId
+      }
+      let request = `http://localhost:3000/api/linkedin/authorization?${this.jsonQueryString(likendinConf)}`
+      window.open(request, '_self')
+    },
+    jsonQueryString: function (obj, prefix) {
+      let str = []
+      let p
+      for (p in obj) {
+        if (obj.hasOwnProperty(p)) {
+          let k = prefix ? prefix + '[' + p + ']' : p
+          let v = obj[p]
+          str.push((v !== null && typeof v === 'object')
+            ? this.jsonQueryString(v, k)
+            : encodeURIComponent(k) + '=' + encodeURIComponent(v))
+        }
+      }
+      return str.join('&')
     }
   },
-  mounted () { },
   created () {
     this.getTorreBio(this)
   },

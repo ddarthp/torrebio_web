@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import profile from '@/components/profile/Profile'
+import Profile from '@/components/profile/Profile'
+import Linkedin from '@/components/linkedin/Linkedin'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -13,9 +15,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/:torreId',
+      path: '/linkedin/auth',
+      name: 'Linkedin',
+      component: Linkedin
+    },
+    {
+      path: '/profile/:torreId',
       name: 'Profile',
-      component: profile
+      component: Profile
     }
   ]
 })

@@ -5,8 +5,13 @@
         .about-bar {
             width: 10%;
             float: right;
+            
             .about{
                 float: right;
+                min-width: 85px;
+                img {
+                    min-width: 85px;
+                }
             }
         }
         .main-bar {
@@ -235,8 +240,8 @@
 }
 
 .bio{
-    .about{
-        background: rgb(96, 125, 139);;
+    .about {
+        background: rgb(96, 125, 139);
         padding: 12vh 0;
         text-align: left;
         color: #fff;
@@ -352,6 +357,122 @@
         position: relative;
         overflow: hidden;
         min-height: calc(100vh - 41px - 56px - 8vh);
+    }
+    .linkedin-profile{
+        background: rgb(96, 125, 139);
+        padding: 6vh 4vh;
+        text-align: left;
+        color: #fff;
+        min-height: 100vh;
+
+        .title {
+            width: 90%;
+            text-align: right;
+            img {
+                height: 50px;
+            }
+        }
+        .left{
+            width: 20%;
+            float: left;
+            padding: 40px 10px;
+            img{
+                width: 100%;
+                border-radius: 50%;
+                border: 10px solid #ffffff21;
+            }
+            .headline {
+                text-align: center;
+                h2 {
+                    text-transform: uppercase;
+                    margin-bottom: 0
+                }
+                h3 {
+                    font-weight: 400;
+                    opacity: .8;
+                    margin-top: 5px
+                }
+            }
+        }
+        .right{
+            text-align: left;
+            width: 80%;
+            float: right;
+            padding: 40px;
+            .summary {
+                .title {
+                    text-align: left;
+                    font-size: 24px;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    color: #363636;
+                    margin-bottom: 20px;
+                    span {
+                        float: right;
+                        font-size: 16px;
+                        opacity: .8;
+                        text-transform: lowercase;
+                    }
+                }
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+            .positions {
+                .title {
+                    text-align: left;
+                    font-size: 20px;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    color: #3d3c3c;
+                    margin-bottom: 20px; 
+                }
+            }
+            .md-card{
+                color:rgba(0,0,0,.8);
+                margin-bottom: 20px;
+                background-color: #fff;
+                text-align: left;
+                
+                h2{
+                    font-size: 20px;
+                    font-weight: 600;
+                    margin: 0 0 8px 0;
+                    font-family: "Muli";
+                    letter-spacing: 0.1px;
+                    -webkit-font-smoothing: subpixel-antialiased;
+                    
+                }
+                h3{
+                    font-size: 16px;
+                    font-weight: 300;
+                    margin: 0
+                }
+                ul,li{
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+                .md-card-footer{
+                   background: rgb(246, 247, 248);
+                   height: 56px;
+                   line-height: 56px;
+                   color:rgba(0,0,0,.5);
+                   padding: 0 16px;
+                   .date {
+                    width: 75%;
+                    float: left;
+                   }
+                   .options {
+                       width: 20%;
+                       float: right;
+                       margin-top: 8px;
+                       button {
+                           float:right;
+                       }
+                   }
+                }
+            }
+        }
     }
     
 }
